@@ -1,0 +1,59 @@
+{
+  "2": {
+    "class_type": "Drama3Loader",
+    "inputs": {
+      "model_name": "drama3_fp8experts_bf16.safetensors",
+      "experts": "in RAM",
+      "expert_cache_gb": 0,
+      "second_gpu": "none",
+      "split_layer": 0
+    }
+  },
+  "3": {
+    "class_type": "Drama3CodecLoader",
+    "inputs": {
+      "codec_name": "drama3_codec.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "Drama3Generate",
+    "inputs": {
+      "model": [
+        "2",
+        0
+      ],
+      "text": "[with wildly excited game-show announcer energy] Congratulations! You have won absolutely nothing! [laughs] But wait! There is less! [laughs]",
+      "seed": 261025304,
+      "temperature": 1.0,
+      "top_p": 0.9,
+      "top_k": 0,
+      "max_frames": 480,
+      "split_long_text": true,
+      "speakers": "one take per line"
+    }
+  },
+  "5": {
+    "class_type": "Drama3Decode",
+    "inputs": {
+      "codec": [
+        "3",
+        0
+      ],
+      "codes": [
+        "4",
+        0
+      ],
+      "shorten_long_pauses": true
+    }
+  },
+  "6": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "5",
+        0
+      ],
+      "filename_prefix": "drama3/voice-lab/04_chaos_host"
+    }
+  }
+}

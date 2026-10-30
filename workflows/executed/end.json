@@ -1,0 +1,166 @@
+{
+  "2": {
+    "inputs": {
+      "clip_name": "qwen3vl_4b_int8_convrot.safetensors",
+      "type": "flux3",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "3": {
+    "inputs": {
+      "vae_name": "flux2-vae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "4": {
+    "inputs": {
+      "text": "budnspud, next scene. In the same laundromat and camera composition, the taller man on the LEFT in blue T-shirt and red shorts raises one hand to his forehead in exaggerated disbelief. The shorter man on the RIGHT wearing olive beanie and rainbow hoodie remains standing with his hands down. Preserve their appearance, outfits and the red washing machine.",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Positive Prompt"
+    }
+  },
+  "7": {
+    "inputs": {
+      "seed": 729036,
+      "steps": 50,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "62",
+        0
+      ],
+      "positive": [
+        "17",
+        0
+      ],
+      "negative": [
+        "17",
+        1
+      ],
+      "latent_image": [
+        "17",
+        2
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "8": {
+    "inputs": {
+      "samples": [
+        "7",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "9": {
+    "inputs": {
+      "filename_prefix": "life-advice/end",
+      "images": [
+        "8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "17": {
+    "inputs": {
+      "resolution": "resize",
+      "resolution.megapixels": 1,
+      "positive": [
+        "4",
+        0
+      ],
+      "negative": [
+        "58",
+        0
+      ],
+      "vae": [
+        "3",
+        0
+      ],
+      "images.image0": [
+        "54",
+        0
+      ]
+    },
+    "class_type": "ReferenceMultiLatent",
+    "_meta": {
+      "title": "Set Reference Multi Latent"
+    }
+  },
+  "54": {
+    "inputs": {
+      "image": "life-advice-start.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "58": {
+    "inputs": {
+      "text": "",
+      "clip": [
+        "2",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "Negative Prompt"
+    }
+  },
+  "59": {
+    "inputs": {
+      "unet_name": "flux3-image-klein-base-int8-convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "62": {
+    "inputs": {
+      "lora_name": "budnspud-next-scene-edit-flux3_klein_v1.safetensors",
+      "strength_model": 1,
+      "model": [
+        "59",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Load LoRA"
+    }
+  }
+}

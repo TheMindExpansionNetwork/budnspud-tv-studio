@@ -1,0 +1,59 @@
+{
+  "2": {
+    "class_type": "Drama3Loader",
+    "inputs": {
+      "model_name": "drama3_fp8experts_bf16.safetensors",
+      "experts": "in RAM",
+      "expert_cache_gb": 0,
+      "second_gpu": "none",
+      "split_layer": 0
+    }
+  },
+  "3": {
+    "class_type": "Drama3CodecLoader",
+    "inputs": {
+      "codec_name": "drama3_codec.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "Drama3Generate",
+    "inputs": {
+      "model": [
+        "2",
+        0
+      ],
+      "text": "[adult male American English voice, bright higher mid register, slightly nasal, quick precise analytical nerd, clearly articulated] I checked the numbers twice, and honestly, this plan is only slightly ridiculous.",
+      "seed": 9321061,
+      "temperature": 1.0,
+      "top_p": 0.9,
+      "top_k": 0,
+      "max_frames": 260,
+      "split_long_text": true,
+      "speakers": "one take per line"
+    }
+  },
+  "5": {
+    "class_type": "Drama3Decode",
+    "inputs": {
+      "codec": [
+        "3",
+        0
+      ],
+      "codes": [
+        "4",
+        0
+      ],
+      "shorten_long_pauses": false
+    }
+  },
+  "6": {
+    "class_type": "SaveAudio",
+    "inputs": {
+      "audio": [
+        "5",
+        0
+      ],
+      "filename_prefix": "ref-voice-v2/left"
+    }
+  }
+}
